@@ -1,1 +1,26 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/AMjY7Wdy)
+# The "ChildAlert" Folder
+The API for the Child Alerts API, for a detailed explanation, look at the code's comments, slides and video.
+
+# The "CommunityEmail" Folder
+The API for the Community Email API, for a detailed explanation, look at the code's comments, slides and video.
+
+# The "FireStation" Folder
+The API for the Fire Station API, for a detailed explanation, look at the code's comments, slides and video.
+
+# The "PersonInfo" Folder
+The API for the Person Info API, for a detailed explanation, look at the code's comments, slides and video.
+
+# ".gitattributes"
+This just makes it so the video for this is added to GitHub's large file system since it's larger than 100MB.
+
+# "AdvancedProgrammingFinal.mkv"
+My video explaining how all of the APIs work. I go into the most detail on the FireStation since it is the first, but I do show them all running.
+
+# "AdvancedProgrammingFinal.pptx"
+The slideshow going over these APIs. Since this will be presented in class among other people, it isn't as detailed as the video.
+
+# "PROG 2200 - FinalProject.docx"
+The original instructions for the final, not required but nice to have here.
+
+# "SOLID.png"
+The filled in SOLID table from the original assignment instructions. It is also on the last slide of the slideshow.
