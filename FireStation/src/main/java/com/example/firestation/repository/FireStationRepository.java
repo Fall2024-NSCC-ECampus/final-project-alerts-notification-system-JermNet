@@ -4,5 +4,4 @@ import com.example.firestation.model.FireStation;
 import org.springframework.data.jpa.repository.JpaRepository;
 // Repository for FireStation
 public interface FireStationRepository extends JpaRepository<FireStation, Long> {
-    int findByStationNumber(int stationNumber);
 }

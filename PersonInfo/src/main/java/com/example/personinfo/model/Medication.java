@@ -1,23 +1,29 @@
 package com.example.personinfo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name="MedicationTable")
 public class Medication {
 
+    // Setters and getters
     // Medication ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     // Name and dosage. Dosage is a string so the amount in number and measurement can be specified.
+    @NotNull(message = "name cannot be null!")
     private String name;
+    @NotNull(message = "dosage cannot be null!")
     private String dosage;
 
     // Medication is many to many since one person can have more than one medication and vise versa. Json thing is to avoid json issues
@@ -49,37 +55,5 @@ public class Medication {
 
     }
 
-    // Setters and getters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDosage() {
-        return dosage;
-    }
-
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
-    }
-
-    public List<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
 }
 

@@ -2,20 +2,32 @@ package com.example.firestation.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name="PersonTable")
 public class Person {
 
+    // Setters and getters
     // Person ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull(message = "firstName cannot be null!")
     private String firstName;
+    @NotNull(message = "lastName cannot be null!")
     private String lastName;
+    @NotNull(message = "address cannot be null!")
     private String address;
+    @NotNull(message = "phoneNumber cannot be null!")
     private String phoneNumber;
+    @Positive(message = "age cannot be negative!")
     private int age;
 
     // Same as FireStation, this is not ManyToMany since a person in an area would most likely only be served by one fire station. Json thing is to avoid json issues
@@ -24,7 +36,7 @@ public class Person {
     @JsonBackReference
     private FireStation fireStation;
 
-    // This means that this should not persist, using this so I can check if a fire station is attached to a person
+    // This means that this should not persist, using this, so I can check if a fire station is attached to a person
     @Transient
     private long fireStationId;
 
@@ -59,71 +71,6 @@ public class Person {
 
     public Person() {
 
-    }
-
-    // Setters and getters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public FireStation getFireStation() {
-        return fireStation;
-    }
-
-    public void setFireStation(FireStation fireStation) {
-        this.fireStation = fireStation;
-    }
-
-    public long getFireStationId() {
-        return fireStationId;
-    }
-
-    public void setFireStationId(long fireStationId) {
-        this.fireStationId = fireStationId;
     }
 
 }

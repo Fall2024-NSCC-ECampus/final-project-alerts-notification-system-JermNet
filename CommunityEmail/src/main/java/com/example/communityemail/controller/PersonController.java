@@ -4,6 +4,8 @@ import com.example.communityemail.model.City;
 import com.example.communityemail.model.Person;
 import com.example.communityemail.repository.CityRepository;
 import com.example.communityemail.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +22,19 @@ public class PersonController {
 
     @Autowired
     private CityRepository cityRepository;
+    private final Logger logger = LoggerFactory.getLogger(PersonController.class);
 
-    // Get all the people by the name of the city they're attached to.
+    /**
+     * Get all people by the name of the city
+     *
+     * @param city the name of the city within the city object
+     *
+     * @return a response entity with either not found or ok depending on circumstances
+     */
     @GetMapping
     public ResponseEntity<List<Person>> getPeopleByCity(@RequestParam String city) {
+        logger.info("Received request to get a new Person: {}", city);
         List<Person> people = personRepository.findByCityName(city);
-
         if (people.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
@@ -33,9 +42,16 @@ public class PersonController {
         }
     }
 
-    // Use this to add a person. First get the city (if it exists), set the city to the person, add the person to the city, save the person to the db and then return status created.
+    /**
+     * Posts a person, making sure to check if the specified city exists or not
+     *
+     * @param person the person to be posted
+     *
+     * @return a response entity with the saved person and created status
+     */
     @PostMapping
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
+        logger.info("Received request to add a new Person: {}", person);
         City city = cityRepository.findById(person.getCityId()).orElseThrow(() -> new RuntimeException("City not found"));
         person.setCity(city);
         city.getPeople().add(person);
@@ -43,9 +59,17 @@ public class PersonController {
         return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
     }
 
-    // Update a person
+    /**
+     * Update a person by finding them using id and using the new information of person details
+     *
+     * @param id the id to find the to be updated person
+     * @param personDetails the new details to replace the old ones
+     *
+     * @return a response entity with either ok status or not found depending on circumstances
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody Person personDetails) {
+        logger.info("Received request to update a Person: {}", id);
         return personRepository.findById(id)
                 .map(person -> {
                     person.setFirstName(personDetails.getFirstName());
@@ -59,7 +83,7 @@ public class PersonController {
                             .orElseThrow(() -> new RuntimeException("City not found"));
                     person.setCity(city);
                     City existingCity = person.getCity();
-                    // Remove from old city, add to new
+                    // Remove from old city, add new
                     existingCity.getPeople().remove(person);
                     existingCity.getPeople().add(person);
                     Person updatedPerson = personRepository.save(person);
@@ -68,9 +92,16 @@ public class PersonController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Same as city but removes the person from the city as well
+    /**
+     * Deletes a person by finding them using the person repository and deleting them
+     *
+     * @param id the id of the person to be deleted
+     *
+     * @return a response entity with either no content or not found status depending on circumstances
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePerson(@PathVariable Long id) {
+        logger.info("Received request to delete a Person: {}", id);
         return personRepository.findById(id)
                 .map(person -> {
                     City city = person.getCity();

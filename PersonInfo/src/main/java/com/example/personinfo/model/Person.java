@@ -1,12 +1,16 @@
 package com.example.personinfo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Setter
+@Getter
 @Table(name="PersonTable")
 public class Person {
 
@@ -15,10 +19,15 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull(message = "firstName cannot be null!")
     private String firstName;
+    @NotNull(message = "lastName cannot be null!")
     private String lastName;
+    @NotNull(message = "address cannot be null!")
     private String address;
+    @NotNull(message = "phoneNumber cannot be null!")
     private String phoneNumber;
+    @Positive(message = "age cannot be negative!")
     private int age;
 
     // Make a table for this since it's more than one value.
@@ -27,13 +36,8 @@ public class Person {
     @Column(name = "allergy")
     private List<String> allergies;
 
-    // This is many to many since one person can have more than one medication and vise versa. This also creates the medication if it doesn't exist already
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "person_medication",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "medication_id")
-    )
+    // This is many to many since one person can have more than one medication and vise versa.
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<Medication> medication;
 
     // Constructors
@@ -68,63 +72,6 @@ public class Person {
 
     public Person() {
 
-    }
-
-    // Setters and getters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<Medication> getMedication() {
-        return medication;
-    }
-
-    public void setMedication(List<Medication> medication) {
-        this.medication = medication;
     }
 
 }

@@ -2,19 +2,26 @@ package com.example.childalert.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name="AddressTable")
 public class Address {
 
+    // Setters and getters
     // Address ID
     @Id
     @GeneratedValue
     private long id;
 
     // String with the address. This is all a separate table so it works better in a database rather than each person having their own string address in which there would be copied addresses.
+    @NotNull(message = "address cannot be null!")
     private String address;
 
     // One to many since a person should only have one address, but an address can have many people. Json thing is to avoid json issues
@@ -43,28 +50,4 @@ public class Address {
 
     }
 
-    // Setters and getters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public List<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
 }

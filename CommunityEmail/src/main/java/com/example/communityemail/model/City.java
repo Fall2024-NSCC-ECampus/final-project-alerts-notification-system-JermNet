@@ -2,21 +2,31 @@ package com.example.communityemail.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name="CityTable")
 public class City {
 
+    // Setters and getters
     // City ID
     @Id
     @GeneratedValue
     private long id;
 
     // Things for a city. Population isn't the count of how many people are in the people list, it's a more general number. Like how in real life where a population isn't perfectly exact.
+    @Positive(message = "population cannot be negative!")
     private int population;
+    @NotNull(message = "name cannot be null!")
     private String name;
+    @NotNull(message = "areaCode cannot be null!")
     private String areaCode;
 
     // Realistically, one person can't be in more city than one at a time, so this makes the most sense. Cascade and orphanRemoval are to prevent db issues when a city is deleted but a person is not.
@@ -51,45 +61,5 @@ public class City {
 
     }
 
-    // Setters and getters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAreaCode() {
-        return areaCode;
-    }
-
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
-
-    public List<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
 }
 
