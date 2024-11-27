@@ -54,20 +54,4 @@ public class FireStation {
     public FireStation() {
 
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setStationNumber(int stationNumber) {
-        this.stationNumber = stationNumber;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
 }
