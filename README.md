@@ -19,6 +19,9 @@ My video explaining how all of the APIs work. I go into the most detail on the F
 # "AdvancedProgrammingFinal.pptx"
 The slideshow going over these APIs. Since this will be presented in class among other people, it isn't as detailed as the video.
 
+# "Mapping Cheat Sheet.pdf"
+This is a pdf document with a text example of how to use every mapping across these four apis including the paths and sample data.
+
 # "PROG 2200 - FinalProject.docx"
 The original instructions for the final, not required but nice to have here.
 
